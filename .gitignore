@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+# local work history (backups, review images, one-off scripts)
+_history/
+# build intermediates (published copies live at the repo root)
+src/book/terminal-book.pdf
+src/book/_render.html
+src/book/_cover.pdf
+src/book/_body.pdf
+src/infographic/infographic.pdf

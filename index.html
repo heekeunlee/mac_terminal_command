@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>두 글자로 말하는 사람들 · 맥 터미널 명령어 핸드북</title>
+<meta name="description" content="맥 터미널 명령어 50개를 사용 예시, 유래, 약어, 문제 해결 사례로 정리한 전자책의 제작 현황과 주요 내용">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+:root{--bg:#FFFFFF;--soft:#F3F6F4;--soft2:#E8EFEB;--ink:#16211E;--muted:#5B6B65;--rule:#DCE2DE;--accent:#1F6F5C;--accent-strong:#134339;--copper:#A85A22;--todo:#B4532A;--code:#17221F;color-scheme:light;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;line-height:1.7;font-size:16px;}
+a{color:var(--accent-strong);}
+img{max-width:100%;height:auto;display:block;}
+code{font-family:'JetBrains Mono','Noto Sans KR',monospace;}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;}
+header.top{border-bottom:1px solid var(--rule);background:#FFFFFFEE;position:sticky;top:0;z-index:5;backdrop-filter:blur(6px);}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px;}
+.brand{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--ink);text-decoration:none;}
+.brand i{display:inline-block;width:8px;height:15px;background:var(--accent);margin-left:4px;vertical-align:-2px;}
+nav a{font-size:14px;color:var(--muted);text-decoration:none;margin-left:18px;}
+nav a:hover{color:var(--accent-strong);}
+@media (max-width:640px){nav a:not(.dl){display:none;}}
+
+.hero{padding-block:64px 56px;display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:center;}
+@media (max-width:860px){.hero{grid-template-columns:1fr;padding-block:40px;}}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;}
+.hero h1{font-family:'Gowun Batang',serif;font-size:clamp(38px,6vw,60px);line-height:1.15;margin:14px 0 10px;letter-spacing:-.01em;text-wrap:balance;}
+.hero h1 i{display:inline-block;width:.42em;height:.85em;background:var(--accent);margin-left:8px;vertical-align:-.05em;animation:blink 1.1s steps(1) infinite;}
+@keyframes blink{50%{opacity:0;}}
+@media (prefers-reduced-motion:reduce){.hero h1 i{animation:none;}}
+.kicker{font-size:14px;color:var(--muted);letter-spacing:.08em;}
+.sub{font-size:19px;font-weight:500;margin:6px 0 18px;}
+.lead{color:var(--muted);max-width:56ch;}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 18px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px;border:1.5px solid var(--accent);}
+.btn.primary{background:var(--accent);color:#fff;}
+.btn.primary:hover{background:var(--accent-strong);}
+.btn.ghost{color:var(--accent-strong);background:#fff;}
+.btn.ghost:hover{background:var(--soft);}
+.btn small{font-weight:400;opacity:.85;font-size:12px;}
+.btn:focus-visible,nav a:focus-visible{outline:3px solid #F0B375;outline-offset:2px;}
+.cover{justify-self:center;max-width:340px;width:100%;}
+.cover img{width:100%;border-radius:6px;box-shadow:0 1px 2px rgba(22,33,30,.08),0 18px 40px rgba(22,33,30,.14);border:1px solid var(--rule);}
+
+section{padding-block:56px;border-top:1px solid var(--rule);}
+.sec-head{margin-bottom:26px;}
+.sec-head .eyebrow{display:block;margin-bottom:6px;}
+h2{font-family:'Gowun Batang',serif;font-size:30px;line-height:1.3;text-wrap:balance;}
+.sec-head p{color:var(--muted);margin-top:6px;max-width:62ch;}
+
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+@media (max-width:860px){.stats{grid-template-columns:repeat(2,1fr);}.stat:last-child{grid-column:span 2;}}
+.stat{background:var(--soft);border-radius:12px;padding:18px 16px;}
+.stat b{display:block;font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--accent-strong);font-variant-numeric:tabular-nums;line-height:1.2;}
+.stat span{font-size:13px;color:var(--muted);}
+
+.stepper{list-style:none;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:28px 0 22px;counter-reset:s;}
+@media (max-width:860px){.stepper{grid-template-columns:1fr 1fr;}}
+.stepper li{border-top:4px solid var(--accent);padding-top:10px;font-size:14px;}
+.stepper li.todo{border-top-color:var(--rule);color:var(--muted);}
+.stepper li em{display:block;font-style:normal;font-size:12px;font-weight:700;color:var(--accent);}
+.stepper li.todo em{color:var(--todo);}
+
+.status{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media (max-width:760px){.status{grid-template-columns:1fr;}}
+.panel{border:1px solid var(--rule);border-radius:12px;padding:20px 22px;}
+.panel h3{font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.pill{font-size:12px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.pill.done{background:#DCEAE3;color:var(--accent-strong);}
+.pill.todo{background:#FBE9E1;color:var(--todo);}
+.panel ul{list-style:none;}
+.panel li{padding:7px 0 7px 26px;position:relative;font-size:15px;border-bottom:1px dashed var(--rule);}
+.panel li:last-child{border-bottom:none;}
+.panel li::before{position:absolute;left:0;top:7px;font-family:'JetBrains Mono',monospace;font-weight:700;}
+.panel.done li::before{content:"✓";color:var(--accent);}
+.panel.todo li::before{content:"○";color:var(--todo);}
+.panel li small{display:block;color:var(--muted);font-size:13px;}
+
+.parts{display:grid;grid-template-columns:1.35fr 1fr;gap:20px;}
+@media (max-width:860px){.parts{grid-template-columns:1fr;}}
+.part{border:1px solid var(--rule);border-radius:12px;padding:22px;}
+.part-no{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#fff;background:var(--accent);border-radius:4px;padding:2px 8px;}
+.part h3{font-family:'Gowun Batang',serif;font-size:22px;margin:10px 0 4px;}
+.part > p{color:var(--muted);font-size:14px;margin-bottom:14px;}
+.chapters{list-style:none;display:grid;gap:10px;}
+.chapters li{display:flex;gap:12px;align-items:flex-start;}
+.cn{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent-strong);background:var(--soft2);border-radius:5px;padding:2px 7px;margin-top:2px;}
+.cn.alt{background:#FBE9E1;color:var(--todo);}
+.chapters b{font-size:15px;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.chips code{font-size:12px;background:var(--soft);border:1px solid var(--rule);border-radius:5px;padding:1px 7px;color:var(--ink);}
+.part h4{font-size:15px;margin:16px 0 8px;}
+
+.gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+@media (max-width:860px){.gallery{grid-template-columns:repeat(2,1fr);}}
+.gallery figure img{width:100%;border:1px solid var(--rule);border-radius:6px;display:block;}
+.gallery figcaption{font-size:13px;color:var(--muted);margin-top:6px;}
+
+.cheat{display:grid;grid-template-columns:1fr 1.3fr;gap:32px;align-items:center;background:var(--soft);border-radius:16px;padding:28px;}
+@media (max-width:760px){.cheat{grid-template-columns:1fr;}}
+.cheat img{width:100%;max-width:100%;border-radius:6px;border:1px solid var(--rule);box-shadow:0 10px 26px rgba(22,33,30,.10);}
+.cheat h3{font-family:'Gowun Batang',serif;font-size:24px;margin:8px 0 6px;}
+.cheat p{color:var(--muted);}
+.twenty{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 20px;}
+.twenty code{font-size:13px;background:#fff;border:1px solid var(--rule);border-radius:6px;padding:2px 8px;color:var(--accent-strong);font-weight:700;}
+
+footer{border-top:1px solid var(--rule);padding-block:28px 40px;color:var(--muted);font-size:13px;}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#">two-letters<i></i></a>
+  <nav><a href="#status">제작 현황</a><a href="#contents">주요 내용</a><a href="#preview">미리보기</a><a href="#cheatsheet" class="dl">필수 20</a></nav>
+</div></header>
+
+<main>
+<div class="wrap hero">
+  <div>
+    <p class="eyebrow">Mac OS Terminal Handbook · 전자책</p>
+    <h1>두 글자로<br>말하는 사람들<i></i></h1>
+    <p class="kicker">맥 터미널 명령어 사전</p>
+    <p class="sub">맥 터미널, 50개의 단어로 컴퓨터와 대화하는 법</p>
+    <p class="lead">ls, cp, mv처럼 암호 같은 두 글자 명령어를 사용 예시와 결과, 이름의 유래, 옵션 글자의 원래 영단어로 풀어 쓴 핸드북입니다. 2부에서는 한 사람의 하루와 여덟 가지 실제 문제를 따라가며 명령어를 문장처럼 이어 쓰는 법을 보여줍니다.</p>
+    <div class="btns">
+      <a class="btn primary" href="%EB%91%90_%EA%B8%80%EC%9E%90%EB%A1%9C_%EB%A7%90%ED%95%98%EB%8A%94_%EC%82%AC%EB%9E%8C%EB%93%A4.pdf">전자책 PDF 받기 <small>208쪽 · 6.1MB</small></a>
+      <a class="btn ghost" href="%EB%A7%A5_%ED%84%B0%EB%AF%B8%EB%84%90_%ED%95%84%EC%88%98%EB%AA%85%EB%A0%B9%EC%96%B4_20.pdf">필수 명령어 20 인포그래픽 <small>4쪽 · 1MB</small></a>
+    </div>
+  </div>
+  <figure class="cover"><img src="assets/previews/book-cover.png" alt="두 글자로 말하는 사람들 표지"></figure>
+</div>
+
+<section id="status"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Status</span><h2>제작 현황</h2><p>원고와 조판, 인쇄용 사전 점검까지 마쳤습니다. 출간 정보(판권·ISBN)와 표지만 남았습니다. 2026년 10월 3일 기준.</p></div>
+  <div class="stats">
+    <div class="stat"><b>208</b><span>쪽 · 신국판 152×225mm</span></div>
+    <div class="stat"><b>50</b><span>명령어 · 12개 장</span></div>
+    <div class="stat"><b>206</b><span>상황별 예제</span></div>
+    <div class="stat"><b>65</b><span>명령어 해부 (조각별 풀이)</span></div>
+    <div class="stat"><b>8</b><span>문제 해결 사례</span></div>
+  </div>
+  <ol class="stepper">
+    <li><em>완료</em>원고 집필</li>
+    <li><em>완료</em>조판 · 전자책 PDF</li>
+    <li><em>완료</em>인쇄용 사전 점검</li>
+    <li class="todo"><em>대기</em>판권 · ISBN</li>
+    <li class="todo"><em>대기</em>펼침 표지</li>
+    <li class="todo"><em>대기</em>교보문고 POD 등록</li>
+  </ol>
+  <div class="status">
+    <div class="panel done"><h3><span class="pill done">완료</span>끝난 작업</h3><ul>
+      <li>1부 두 글자 사전<small>터미널 기초 16문항, 명령어 50개, 장별 빠른 참조표 12개</small></li>
+      <li>2부 두 글자로 문제 풀기<small>13장 프로젝트 하루 따라 하기 · 14장 문제 해결 사례 8가지</small></li>
+      <li>옵션 표 46개에 원래 영단어 표기<small>예: -r → recursive, -x → extract</small></li>
+      <li>쪽수가 맞는 목차 · 목적별 찾아보기 52항목 · PDF 책갈피</li>
+      <li>인쇄 사전 점검 통과<small>판형 일치, 폰트 전부 내장(OFL), 시스템 폰트 0, 짝수 쪽수, 고아 제목 0</small></li>
+      <li>필수 명령어 20 인포그래픽(A4 4쪽)</li>
+    </ul></div>
+    <div class="panel todo"><h3><span class="pill todo">남은 일</span>출간 전 할 일</h3><ul>
+      <li>판권면 · 저자 정보<small>발행인, 발행처, 신고번호, 발행일, 정가 확정 필요</small></li>
+      <li>ISBN 발급 · 바코드<small>표지 확정 전에 먼저 필요</small></li>
+      <li>교보문고 POD 사양 확인<small>지원 판형, 컬러/흑백 내지, 안쪽 여백</small></li>
+      <li>펼침 표지 제작<small>책등 약 13mm(추정), 최종값은 유통사 계산값으로</small></li>
+      <li>실물 시험본 1부 확인 후 판매 개시</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<section id="contents"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Contents</span><h2>주요 내용</h2><p>명령어마다 형식 → 실행 예시와 결과 → 유래 → 옵션의 원래 영단어 → 상황별 예제 → 기억법·꿀팁·비하인드 스토리 순서로 같은 구조를 따릅니다.</p></div>
+  <div class="parts">
+    <div class="part">
+      <span class="part-no">1부</span><h3>두 글자 사전</h3>
+      <p>터미널이 처음인 사람을 위한 기초와, 맥에서 가장 많이 쓰는 명령어 50개.</p>
+      <ul class="chapters">
+        <li><span class="cn">00</span><div><b>터미널이 처음이라면</b><div class="chips"><code>왜 배워야 할까</code><code>프롬프트 읽기</code><code>% $ #</code><code>zsh와 셸</code><code>AI 시대에도?</code></div></div></li>
+        <li><span class="cn">01</span><div><b>이동과 둘러보기</b><div class="chips"><code>pwd</code><code>cd</code><code>ls</code></div></div></li><li><span class="cn">02</span><div><b>파일과 디렉토리 다루기</b><div class="chips"><code>mkdir</code><code>rmdir</code><code>touch</code><code>rm</code><code>cp</code><code>mv</code><code>ln</code></div></div></li><li><span class="cn">03</span><div><b>내용 들여다보기</b><div class="chips"><code>cat</code><code>less</code><code>head</code><code>tail</code><code>echo</code></div></div></li><li><span class="cn">04</span><div><b>찾고 뒤지기</b><div class="chips"><code>find</code><code>grep</code><code>which</code></div></div></li><li><span class="cn">05</span><div><b>텍스트 가공하기</b><div class="chips"><code>wc</code><code>sort</code><code>sed</code><code>xargs</code></div></div></li><li><span class="cn">06</span><div><b>권한과 관리자</b><div class="chips"><code>chmod</code><code>chown</code><code>sudo</code></div></div></li><li><span class="cn">07</span><div><b>압축과 보관</b><div class="chips"><code>tar</code><code>zip</code></div></div></li><li><span class="cn">08</span><div><b>네트워크와 원격 접속</b><div class="chips"><code>ping</code><code>curl</code><code>wget</code><code>ssh</code><code>scp</code><code>rsync</code></div></div></li><li><span class="cn">09</span><div><b>프로세스 관리</b><div class="chips"><code>ps</code><code>top</code><code>kill</code><code>lsof</code></div></div></li><li><span class="cn">10</span><div><b>비교와 용량 확인</b><div class="chips"><code>diff</code><code>du</code><code>df</code></div></div></li><li><span class="cn">11</span><div><b>셸 환경과 도움말</b><div class="chips"><code>alias</code><code>export</code><code>source</code><code>history</code><code>man</code></div></div></li><li><span class="cn">12</span><div><b>맥에서만 되는 것들</b><div class="chips"><code>open</code><code>pbcopy</code><code>mdfind</code><code>caffeinate</code><code>say</code></div></div></li>
+      </ul>
+    </div>
+    <div class="part">
+      <span class="part-no">2부</span><h3>두 글자로 문제 풀기</h3>
+      <p>익힌 단어를 실제 상황에 이어 쓰는 법. 모든 명령은 조각마다 뜻을 풀어 설명합니다.</p>
+      <h4>13장 · 따라 하기: 프로젝트 하나를 처음부터 끝까지</h4>
+      <div class="chips"><code>09:00 작업할 자리 만들기</code><code>09:05 도구가 준비됐는지 확인하기</code><code>09:10 뼈대 세우기</code><code>09:20 설정 파일 채우기</code><code>09:30 개발 서버 켜기, 그리고 첫 번째 막힘</code><code>11:00 작업하면서 수시로</code><code>15:00 올리기 전 점검</code><code>16:00 저장하고 내보내기</code><code>18:00 내일을 위한 정리</code></div>
+      <h4>14장 · 문제 해결 사례집: 증상 → 원인 → 해결 → 확인</h4>
+      <ul class="chapters"><li><span class='cn alt'>1</span><span>디스크 공간이 부족하다는 경고가 뜬다</span></li><li><span class='cn alt'>2</span><span>맥이 갑자기 느려지고 팬이 요란하게 돈다</span></li><li><span class='cn alt'>3</span><span>외장하드가 &quot;사용 중&quot;이라며 추출되지 않는다</span></li><li><span class='cn alt'>4</span><span>스크립트를 실행하면 Permission denied가 뜬다</span></li><li><span class='cn alt'>5</span><span>분명 설치했는데 command not found가 뜬다</span></li><li><span class='cn alt'>6</span><span>어제 받은 파일이 어디 있는지 모르겠다</span></li><li><span class='cn alt'>7</span><span>인터넷이 안 된다. 어디가 문제일까</span></li><li><span class='cn alt'>8</span><span>문서 수십 개에 같은 오타가 있다</span></li></ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="preview"><div class="wrap">
+  <div class="sec-head"><span class="eyebrow">Preview</span><h2>미리보기</h2></div>
+  <div class="gallery">
+    <figure><img src="assets/previews/book-cover.png" alt="표지"><figcaption>표지</figcaption></figure>
+    <figure><img src="assets/previews/book-why.png" alt="터미널을 익히면 무엇이 달라질까"><figcaption>왜 배워야 할까</figcaption></figure>
+    <figure><img src="assets/previews/book-command.png" alt="grep 명령어 쪽"><figcaption>명령어 쪽 (grep)</figcaption></figure>
+    <figure><img src="assets/previews/book-day.png" alt="지민의 하루 한눈에 보기"><figcaption>13장 하루 흐름도</figcaption></figure>
+    <figure><img src="assets/previews/book-case.png" alt="문제 해결 사례 1"><figcaption>14장 사례 1</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="cheatsheet"><div class="wrap">
+  <div class="cheat">
+    <img src="assets/previews/cheatsheet-p1.png" alt="맥 터미널 필수 명령어 20 인포그래픽 1쪽">
+    <div>
+      <span class="eyebrow">Cheat Sheet · 별도 배포용</span>
+      <h3>맥 터미널 필수 명령어 20</h3>
+      <p>가장 많이 쓰는 20개를 사용 예시, 유래, 약어로 A4 네 쪽에 정리한 인포그래픽입니다. 휴대폰으로 보기 좋고 인쇄해도 깔끔합니다.</p>
+      <div class="twenty"><code>pwd</code><code>cd</code><code>ls</code><code>cat</code><code>man</code><code>mkdir</code><code>touch</code><code>cp</code><code>mv</code><code>rm</code><code>grep</code><code>find</code><code>echo</code><code>chmod</code><code>sudo</code><code>ps</code><code>kill</code><code>curl</code><code>ssh</code><code>tar</code></div>
+      <a class="btn primary" href="%EB%A7%A5_%ED%84%B0%EB%AF%B8%EB%84%90_%ED%95%84%EC%88%98%EB%AA%85%EB%A0%B9%EC%96%B4_20.pdf">인포그래픽 PDF 받기 <small>4쪽 · 1MB</small></a>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span>두 글자로 말하는 사람들 — 맥 터미널, 50개의 단어로 컴퓨터와 대화하는 법</span>
+  <span>마지막 업데이트 2026-10-03 · <a href="https://github.com/heekeunlee/mac_terminal_command">GitHub 저장소</a></span>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>맥 터미널 필수 명령어 20</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"><style>
+@page { size: 210mm 297mm; margin: 0; }
+:root { --ink:#16211E; --muted:#5B6B65; --rule:#DCE2DE; --code:#17221F; --codeink:#E3EEE8; --codemuted:#93AAA0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background:#FFFFFF; color:var(--ink); font-family:'Noto Sans KR', sans-serif;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+code, .c-term, kbd { font-family:'JetBrains Mono','Noto Sans KR',monospace; }
+.page { width:210mm; height:297mm; padding:11mm 12mm 9mm; display:flex; flex-direction:column; page-break-after:always; overflow:hidden; }
+.page:last-child { page-break-after:auto; }
+
+.hero { padding-bottom:5mm; margin-bottom:4mm; border-bottom:1.2pt solid var(--ink); }
+.eyebrow { font-size:7.5pt; font-weight:700; letter-spacing:.2em; color:var(--c); }
+.hero h1 { font-family:'Gowun Batang', serif; font-size:30pt; font-weight:700; line-height:1.15; margin:2mm 0 1.5mm; letter-spacing:-.01em; }
+.hero h1 span { color:#fff; background:var(--c); border-radius:4pt; padding:0 6pt; font-family:'JetBrains Mono',monospace; font-size:26pt; }
+.lead { font-size:11pt; font-weight:500; color:var(--muted); }
+.howto { display:flex; gap:8mm; margin-top:3mm; font-size:8.2pt; color:var(--muted); flex-wrap:wrap; }
+.howto b { color:var(--ink); margin-right:4pt; }
+.howto em { font-style:normal; color:var(--c); font-weight:700; text-decoration:underline; text-underline-offset:2pt; }
+
+.band { display:flex; align-items:baseline; gap:4mm; background:var(--t); border-radius:6pt; padding:3.2mm 4.5mm; margin-bottom:3.5mm; }
+.band .pno { font-family:'JetBrains Mono',monospace; font-size:8pt; font-weight:700; color:#fff; background:var(--c); border-radius:3pt; padding:1pt 5pt; }
+.band h2 { font-family:'Gowun Batang', serif; font-size:15pt; font-weight:700; color:var(--ink); }
+.band p { font-size:8.6pt; color:var(--muted); }
+
+.cards { display:flex; flex-direction:column; gap:3mm; flex:1; }
+.card { flex:1; display:grid; grid-template-columns:44mm 72mm 1fr; gap:4mm; align-items:stretch;
+  border:0.8pt solid var(--rule); border-left:3.5pt solid var(--c); border-radius:6pt; padding:3.2mm 3.8mm; }
+.c-id { display:flex; flex-direction:column; justify-content:center; }
+.no { font-family:'JetBrains Mono',monospace; font-size:8pt; font-weight:700; color:var(--c); }
+.c-id h3 { font-family:'JetBrains Mono',monospace; font-size:24pt; font-weight:700; line-height:1.05; margin:.5mm 0 1.5mm; letter-spacing:-.02em; }
+.abbr { font-family:'JetBrains Mono','Noto Sans KR',monospace; font-size:8.8pt; color:var(--muted); line-height:1.35; }
+.abbr b { color:var(--c); font-weight:700; text-decoration:underline; text-underline-offset:1.6pt; }
+.mean { font-size:10pt; font-weight:700; color:var(--ink); margin-top:2mm; line-height:1.35; word-break:keep-all; }
+
+.c-term { background:var(--code); border-radius:5pt; padding:2.4mm 3mm; color:var(--codeink); font-size:8.4pt; line-height:1.65;
+  display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+.dots { display:flex; gap:3pt; margin-bottom:1.6mm; }
+.dots i { width:5pt; height:5pt; border-radius:50%; background:#FF5F57; display:block; }
+.dots i:nth-child(2) { background:#FEBC2E; } .dots i:nth-child(3) { background:#28C840; }
+.ln { white-space:pre-wrap; word-break:break-all; }
+.ln .pr { color:#7BE0B7; font-weight:700; }
+.ln.out { color:var(--codemuted); }
+.ln .ar { color:#F0B375; }
+
+.c-info { display:flex; flex-direction:column; justify-content:center; gap:2.2mm; }
+.origin { font-size:8.8pt; line-height:1.55; color:var(--ink); word-break:keep-all; }
+.tag { display:inline-block; font-size:6.8pt; font-weight:700; color:var(--c); background:var(--t); border-radius:3pt; padding:0 4pt; margin-right:4pt; vertical-align:1pt; }
+.opts { display:flex; flex-wrap:wrap; gap:1.4mm; }
+.opt { font-size:7.9pt; color:var(--muted); background:#F4F6F5; border-radius:3pt; padding:.6mm 1.8mm; }
+.opt code { font-size:7.9pt; font-weight:700; color:var(--c); margin-right:3pt; }
+
+.tips { margin-top:3.5mm; display:flex; flex-wrap:wrap; align-items:center; gap:2mm 4mm; border-top:1pt solid var(--rule); padding-top:3mm; }
+.tips-title { font-family:'Gowun Batang',serif; font-weight:700; font-size:10pt; margin-right:2mm; }
+.tip { font-size:8pt; color:var(--muted); }
+kbd { font-size:7.6pt; font-weight:700; color:var(--ink); border:0.8pt solid var(--rule); border-bottom-width:1.8pt; border-radius:3pt; padding:0 4pt; margin-right:3pt; background:#FAFBFA; }
+
+footer { margin-top:3mm; display:flex; justify-content:space-between; font-size:6.8pt; color:#9AA8A2; }
+</style></head><body>
+  <section class="page first" style="--c:#1F6F5C; --t:#E6F1EC;">
+    
+    <header class="hero">
+      <p class="eyebrow">MAC OS TERMINAL CHEAT SHEET</p>
+      <h1>맥 터미널 필수 명령어 <span>20</span></h1>
+      <p class="lead">사용 예시 · 유래 · 약어로 한 번에 익히기</p>
+      <div class="howto">
+        <span><b>터미널 여는 법</b> Cmd + Space → "터미널" → Enter</span>
+        <span><b>읽는 법</b> 약어에서 <em>색 글자</em>가 명령어 이름이 된 부분</span>
+      </div>
+    </header>
+    <div class="band"><span class="pno">1 / 4</span><h2>이동하고 둘러보기</h2><p>터미널을 열면 가장 먼저 쓰는 다섯 단어</p></div>
+    <div class="cards">
+    <article class="card">
+      <div class="c-id">
+        <span class="no">01</span>
+        <h3>pwd</h3>
+        <p class="abbr"><b>p</b>rint <b>w</b>orking <b>d</b>irectory</p>
+        <p class="mean">지금 내가 있는 폴더 위치를 알려준다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> pwd</div><div class="ln out">/Users/me/Documents</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>결과가 종이에 인쇄되던 텔레타이프 시절의 흔적이라 화면 출력인데도 &#x27;print&#x27;라고 부른다.</p>
+        <div class="opts"><span class="opt"><code>-P</code>실제 경로</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">02</span>
+        <h3>cd</h3>
+        <p class="abbr"><b>c</b>hange <b>d</b>irectory</p>
+        <p class="mean">다른 폴더로 이동한다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> cd Documents</div><div class="ln out"><span class="ar">→</span> 프롬프트가 ~/Documents 로 바뀜</div><div class="ln"><span class="pr">%</span> cd ..</div><div class="ln out"><span class="ar">→</span> 한 단계 위 폴더로</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>초기 유닉스에서는 chdir였다. 가장 많이 치는 명령이라 두 글자로 줄었다.</p>
+        <div class="opts"><span class="opt"><code>~</code>홈 폴더</span><span class="opt"><code>..</code>위 폴더</span><span class="opt"><code>-</code>직전 폴더</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">03</span>
+        <h3>ls</h3>
+        <p class="abbr"><b>l</b>i<b>s</b>t</p>
+        <p class="mean">폴더 안에 무엇이 있는지 보여준다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> ls -la</div><div class="ln out">drwxr-xr-x  5 me  staff  160 notes</div><div class="ln out">-rw-r--r--  1 me  staff   52 .env</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>점(.)으로 시작하는 &#x27;숨김 파일&#x27;은 ls가 .과 ..을 감추려던 코드의 부작용에서 생겨난 관례다.</p>
+        <div class="opts"><span class="opt"><code>-l</code>long 자세히</span><span class="opt"><code>-a</code>all 숨김까지</span><span class="opt"><code>-h</code>읽기 쉬운 단위</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">04</span>
+        <h3>cat</h3>
+        <p class="abbr"><b>c</b>on<b>cat</b>enate</p>
+        <p class="mean">파일 내용을 화면에 그대로 보여준다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> cat memo.txt</div><div class="ln out">오늘 할 일: 강의 자료 정리</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>고양이와는 무관하다. &#x27;사슬처럼 이어 붙이다&#x27;라는 뜻으로, 원래 여러 파일을 이어 붙이는 명령이었다.</p>
+        <div class="opts"><span class="opt"><code>-n</code>줄 번호</span><span class="opt"><code>a b &gt; c</code>두 파일 합치기</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">05</span>
+        <h3>man</h3>
+        <p class="abbr"><b>man</b>ual</p>
+        <p class="mean">명령어의 공식 설명서를 연다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> man ls</div><div class="ln out">LS(1)   General Commands Manual</div><div class="ln out"><span class="ar">→</span> q 를 누르면 닫힘</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>1971년 첫 유닉스 설명서 형식이 지금까지 그대로 이어진다. 모르는 명령은 man부터.</p>
+        <div class="opts"><span class="opt"><code>-k 단어</code>관련 명령 찾기</span><span class="opt"><code>/단어</code>설명서 안 검색</span></div>
+      </div>
+    </article></div>
+    
+    <footer><span>「두 글자로 말하는 사람들」 맥 터미널 명령어 사전에서</span><span>zsh(%) 기준 · 예시 결과는 이해를 돕기 위한 것</span></footer>
+  </section>
+  <section class="page" style="--c:#A85A22; --t:#F8EDE3;">
+    
+    <div class="band"><span class="pno">2 / 4</span><h2>파일과 폴더 다루기</h2><p>만들고, 복사하고, 옮기고, 지우기</p></div>
+    <div class="cards">
+    <article class="card">
+      <div class="c-id">
+        <span class="no">06</span>
+        <h3>mkdir</h3>
+        <p class="abbr"><b>m</b>a<b>k</b>e <b>dir</b>ectory</p>
+        <p class="mean">새 폴더를 만든다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> mkdir -p 2026/10/notes</div><div class="ln out"><span class="ar">→</span> 중간 폴더까지 한 번에 생성</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>유닉스 명령은 성공하면 아무 말도 하지 않는다. 조용하다면 잘 된 것이다.</p>
+        <div class="opts"><span class="opt"><code>-p</code>parents 중간 폴더도</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">07</span>
+        <h3>touch</h3>
+        <p class="abbr"><b>touch</b> · 살짝 건드리다</p>
+        <p class="mean">빈 파일을 만든다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> touch index.html</div><div class="ln out"><span class="ar">→</span> 크기 0짜리 새 파일 생성</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>원래는 파일을 &#x27;살짝 건드려&#x27; 수정 시각만 바꾸는 명령이었다. 새 파일이 생기는 부수 효과가 더 유명해졌다.</p>
+        <div class="opts"><span class="opt"><code>a{1..3}.md</code>번호 붙여 여러 개</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">08</span>
+        <h3>cp</h3>
+        <p class="abbr"><b>c</b>o<b>p</b>y</p>
+        <p class="mean">복사본을 만든다. 원본은 그대로</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> cp report.txt backup.txt</div><div class="ln"><span class="pr">%</span> cp -R project/ project_bak/</div><div class="ln out"><span class="ar">→</span> 폴더째 복사</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>대상 파일이 이미 있으면 묻지 않고 덮어쓴다. 중요한 파일은 -i를 붙이는 습관을.</p>
+        <div class="opts"><span class="opt"><code>-R</code>Recursive 폴더째</span><span class="opt"><code>-i</code>interactive 묻기</span><span class="opt"><code>-n</code>덮어쓰지 않기</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">09</span>
+        <h3>mv</h3>
+        <p class="abbr"><b>m</b>o<b>v</b>e</p>
+        <p class="mean">옮기거나 이름을 바꾼다. 원본은 사라진다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> mv old.txt new.txt</div><div class="ln out"><span class="ar">→</span> 이름만 바뀜</div><div class="ln"><span class="pr">%</span> mv *.pdf ~/Documents/</div><div class="ln out"><span class="ar">→</span> PDF 전부 이동</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>같은 디스크 안에서는 실제로 복사하지 않고 목차만 바꿔서, 수십 GB도 순식간에 &#x27;이동&#x27;한다.</p>
+        <div class="opts"><span class="opt"><code>-i</code>덮어쓰기 전 묻기</span><span class="opt"><code>-n</code>있으면 그대로</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">10</span>
+        <h3>rm</h3>
+        <p class="abbr"><b>r</b>e<b>m</b>ove</p>
+        <p class="mean">휴지통 없이 바로 지운다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> rm -i draft.txt</div><div class="ln out">remove draft.txt? y</div><div class="ln"><span class="pr">%</span> rm -r old_project/</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>2015년 한 게임 플랫폼의 스크립트에서 변수 하나가 비면서 rm -rf가 사용자 파일을 통째로 지운 사고가 있었다.</p>
+        <div class="opts"><span class="opt"><code>-r</code>recursive 폴더째</span><span class="opt"><code>-i</code>하나씩 확인</span><span class="opt"><code>-f</code>force 강제</span></div>
+      </div>
+    </article></div>
+    
+    <footer><span>「두 글자로 말하는 사람들」 맥 터미널 명령어 사전에서</span><span>zsh(%) 기준 · 예시 결과는 이해를 돕기 위한 것</span></footer>
+  </section>
+  <section class="page" style="--c:#4F4A8C; --t:#ECEBF5;">
+    
+    <div class="band"><span class="pno">3 / 4</span><h2>찾고, 쓰고, 권한 주기</h2><p>원하는 것을 찾아내고 다루는 법</p></div>
+    <div class="cards">
+    <article class="card">
+      <div class="c-id">
+        <span class="no">11</span>
+        <h3>grep</h3>
+        <p class="abbr"><b>g</b>lobal <b>re</b>gular expression <b>p</b>rint</p>
+        <p class="mean">파일 속에서 글자를 찾아낸다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> grep -rn &quot;TODO&quot; src/</div><div class="ln out">src/App.tsx:42:// TODO: 3장 추가</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>옛 편집기 ed의 명령 g/re/p에서 왔다. 켄 톰슨이 하룻밤 만에 독립 프로그램으로 만들었다는 일화가 있다.</p>
+        <div class="opts"><span class="opt"><code>-r</code>하위 폴더까지</span><span class="opt"><code>-i</code>대소문자 무시</span><span class="opt"><code>-n</code>줄 번호</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">12</span>
+        <h3>find</h3>
+        <p class="abbr"><b>find</b> · 찾다</p>
+        <p class="mean">조건에 맞는 파일을 찾아낸다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> find ~ -size +1G</div><div class="ln out">/Users/me/Movies/lecture.mov</div><div class="ln"><span class="pr">%</span> find . -name &quot;*.pdf&quot;</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>find는 파일을, grep은 내용을 찾는다. 이 한 문장으로 둘을 구분하면 헷갈리지 않는다.</p>
+        <div class="opts"><span class="opt"><code>-name</code>이름으로</span><span class="opt"><code>-type d</code>폴더만</span><span class="opt"><code>-mtime -7</code>7일 이내 수정</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">13</span>
+        <h3>echo</h3>
+        <p class="abbr"><b>echo</b> · 메아리</p>
+        <p class="mean">입력한 말을 그대로 되돌려준다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> echo $HOME</div><div class="ln out">/Users/me</div><div class="ln"><span class="pr">%</span> echo &quot;한 줄&quot; &gt;&gt; note.txt</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>외친 말을 돌려주는 메아리처럼 글자를 출력한다. 변수 확인과 파일 쓰기에 매일 쓰인다.</p>
+        <div class="opts"><span class="opt"><code>&gt;</code>덮어쓰기</span><span class="opt"><code>&gt;&gt;</code>덧붙이기</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">14</span>
+        <h3>chmod</h3>
+        <p class="abbr"><b>ch</b>ange <b>mod</b>e</p>
+        <p class="mean">누가 읽고 쓰고 실행할지 정한다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> chmod +x run.sh</div><div class="ln out"><span class="ar">→</span> 실행할 수 있게 됨</div><div class="ln"><span class="pr">%</span> chmod 755 run.sh</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>읽기 r=4, 쓰기 w=2, 실행 x=1은 2진수 자리값이다. 더하면 권한 숫자가 된다. 4+2+1=7.</p>
+        <div class="opts"><span class="opt"><code>+x</code>실행 권한 추가</span><span class="opt"><code>755</code>나 전부, 남 읽기·실행</span><span class="opt"><code>-R</code>폴더 전체</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">15</span>
+        <h3>sudo</h3>
+        <p class="abbr"><b>su</b>peruser <b>do</b></p>
+        <p class="mean">이 명령 하나만 관리자 권한으로 실행한다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> sudo !!</div><div class="ln out">Password:</div><div class="ln out"><span class="ar">→</span> 입력해도 안 보이는 게 정상</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>1980년 미국 뉴욕주립대 버펄로에서 탄생. 웹툰 xkcd의 &#x27;sudo 샌드위치 만들어 줘&#x27; 농담으로 유명하다.</p>
+        <div class="opts"><span class="opt"><code>!!</code>직전 명령을 관리자로</span><span class="opt"><code>-k</code>다음엔 다시 묻기</span></div>
+      </div>
+    </article></div>
+    
+    <footer><span>「두 글자로 말하는 사람들」 맥 터미널 명령어 사전에서</span><span>zsh(%) 기준 · 예시 결과는 이해를 돕기 위한 것</span></footer>
+  </section>
+  <section class="page" style="--c:#A33B3B; --t:#F6E9E8;">
+    
+    <div class="band"><span class="pno">4 / 4</span><h2>프로그램과 인터넷</h2><p>실행 중인 것을 다루고, 밖과 연결하기</p></div>
+    <div class="cards">
+    <article class="card">
+      <div class="c-id">
+        <span class="no">16</span>
+        <h3>ps</h3>
+        <p class="abbr"><b>p</b>rocess <b>s</b>tatus</p>
+        <p class="mean">지금 실행 중인 프로그램을 보여준다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> ps aux | grep node</div><div class="ln out">me  4821  98.2  node server.js</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>두 번째 칸의 숫자(PID)가 프로그램의 고유 번호다. 멈출 때 이 번호가 필요하다.</p>
+        <div class="opts"><span class="opt"><code>aux</code>모든 프로그램 자세히</span><span class="opt"><code>-r</code>CPU 많이 쓰는 순</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">17</span>
+        <h3>kill</h3>
+        <p class="abbr"><b>kill</b> · 신호를 보내다</p>
+        <p class="mean">프로그램에 신호를 보내 멈추게 한다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> kill 4821</div><div class="ln out"><span class="ar">→</span> 정리하고 끝내 달라는 요청</div><div class="ln"><span class="pr">%</span> kill -9 4821</div><div class="ln out"><span class="ar">→</span> 거부할 수 없는 강제 종료</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>이름은 &#x27;죽이다&#x27;지만 실제로는 신호를 보내는 명령이다. -9만 프로그램이 거부할 수 없다.</p>
+        <div class="opts"><span class="opt"><code>-9</code>강제 종료</span><span class="opt"><code>killall 앱</code>이름으로 종료</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">18</span>
+        <h3>curl</h3>
+        <p class="abbr"><b>c</b>lient <b>URL</b></p>
+        <p class="mean">인터넷 주소와 데이터를 주고받는다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> curl -O https://example.com/a.zip</div><div class="ln"><span class="pr">%</span> curl wttr.in/Seoul</div><div class="ln out"><span class="ar">→</span> 터미널에 서울 날씨가 그림으로</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>1996년 스웨덴의 다니엘 스텐베리가 만든 httpget이 urlget을 거쳐 curl이 되었다.</p>
+        <div class="opts"><span class="opt"><code>-O</code>원래 이름으로 저장</span><span class="opt"><code>-L</code>옮긴 주소 따라가기</span><span class="opt"><code>-I</code>응답 정보만</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">19</span>
+        <h3>ssh</h3>
+        <p class="abbr"><b>s</b>ecure <b>sh</b>ell</p>
+        <p class="mean">다른 컴퓨터에 안전하게 접속한다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> ssh me@myserver.com</div><div class="ln out">me@myserver:~$</div><div class="ln out"><span class="ar">→</span> 서버를 내 맥처럼 조작</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>1995년 핀란드의 타투 윌로넨이 대학 네트워크에서 비밀번호를 도둑맞은 뒤 직접 만든 암호화 접속 도구다.</p>
+        <div class="opts"><span class="opt"><code>-p</code>port 포트 번호</span><span class="opt"><code>-i</code>identity 키 파일</span><span class="opt"><code>exit</code>접속 끝내기</span></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="c-id">
+        <span class="no">20</span>
+        <h3>tar</h3>
+        <p class="abbr"><b>t</b>ape <b>ar</b>chive</p>
+        <p class="mean">여러 파일을 하나로 묶고 푼다</p>
+      </div>
+      <div class="c-term"><div class="dots"><i></i><i></i><i></i></div><div class="ln"><span class="pr">%</span> tar -czvf backup.tar.gz docs/</div><div class="ln out"><span class="ar">→</span> docs 폴더를 하나로 압축</div><div class="ln"><span class="pr">%</span> tar -xzvf backup.tar.gz</div></div>
+      <div class="c-info">
+        <p class="origin"><span class="tag">유래</span>1970년대 자기 테이프에 파일을 이어 기록하던 시절의 이름이다. 묶인 파일을 &#x27;타볼(tarball)&#x27;이라 부른다.</p>
+        <div class="opts"><span class="opt"><code>c / x</code>create 묶기 · extract 풀기</span><span class="opt"><code>z</code>gzip 압축</span><span class="opt"><code>f</code>file 파일 이름</span></div>
+      </div>
+    </article></div>
+    <div class="tips"><span class="tips-title">손에 붙으면 빨라지는 키</span><span class="tip"><kbd>Tab</kbd>이름 자동완성</span><span class="tip"><kbd>↑</kbd>방금 쓴 명령 다시</span><span class="tip"><kbd>Control + C</kbd>실행 중단</span><span class="tip"><kbd>Control + R</kbd>지난 명령 검색</span><span class="tip"><kbd>Cmd + K</kbd>화면 지우기</span></div>
+    <footer><span>「두 글자로 말하는 사람들」 맥 터미널 명령어 사전에서</span><span>zsh(%) 기준 · 예시 결과는 이해를 돕기 위한 것</span></footer>
+  </section></body></html>
