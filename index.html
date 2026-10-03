@@ -6,6 +6,11 @@
 <title>두 글자로 말하는 사람들 · 맥 터미널 명령어 핸드북</title>
 <meta name="description" content="맥 터미널 명령어 50개를 사용 예시, 유래, 약어, 문제 해결 사례로 정리한 전자책의 제작 현황과 주요 내용">
 <meta name="color-scheme" content="light">
+<script>
+try{ if(sessionStorage.getItem("tl-unlocked")!=="1") document.documentElement.classList.add("locked"); }
+catch(e){ document.documentElement.classList.add("locked"); }
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap">
 <style>
@@ -110,9 +115,43 @@ h2{font-family:'Gowun Batang',serif;font-size:30px;line-height:1.3;text-wrap:bal
 
 footer{border-top:1px solid var(--rule);padding-block:28px 40px;color:var(--muted);font-size:13px;}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;}
+
+/* ---------------- password gate ---------------- */
+#gate{display:none;}
+html.locked{overflow:hidden;}
+html.locked body > :not(#gate){display:none !important;}
+html.locked #gate{display:flex;}
+#gate{position:fixed;inset:0;z-index:50;background:var(--bg);align-items:center;justify-content:center;padding:24px 20px;}
+.gate-box{width:100%;max-width:360px;text-align:center;}
+.gate-box .eyebrow{display:block;margin-bottom:10px;}
+.gate-box h1{font-family:'Gowun Batang',serif;font-size:32px;line-height:1.2;margin-bottom:6px;}
+.gate-box h1 i{display:inline-block;width:.42em;height:.85em;background:var(--accent);margin-left:6px;vertical-align:-.05em;}
+.gate-box p{color:var(--muted);font-size:15px;margin-bottom:22px;}
+#pin{width:100%;font-family:'JetBrains Mono',monospace;font-size:34px;letter-spacing:.6em;text-indent:.6em;text-align:center;
+  padding:14px 10px;border:2px solid var(--rule);border-radius:12px;background:var(--soft);color:var(--ink);outline:none;}
+#pin:focus{border-color:var(--accent);background:#fff;}
+#gate button{margin-top:14px;width:100%;padding:13px;border:none;border-radius:10px;background:var(--accent);color:#fff;font:700 16px 'Noto Sans KR',sans-serif;cursor:pointer;}
+#gate button:hover{background:var(--accent-strong);}
+#gate button:focus-visible{outline:3px solid #F0B375;outline-offset:2px;}
+#gate-msg{min-height:22px;margin-top:12px;font-size:14px;color:var(--todo);}
+.shake{animation:shake .35s;}
+@keyframes shake{20%,60%{transform:translateX(-8px);}40%,80%{transform:translateX(8px);}}
+@media (prefers-reduced-motion:reduce){.shake{animation:none;}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
 </style>
 </head>
 <body>
+<div id="gate" role="dialog" aria-labelledby="gate-title">
+  <form class="gate-box" id="gate-form" autocomplete="off">
+    <span class="eyebrow">Mac OS Terminal Handbook</span>
+    <h1 id="gate-title">두 글자로<br>말하는 사람들<i></i></h1>
+    <p>비밀번호 숫자 네 자리를 입력하면 열립니다.</p>
+    <label for="pin" class="sr">비밀번호</label>
+    <input id="pin" name="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autofocus aria-describedby="gate-msg">
+    <button type="submit">열기</button>
+    <div id="gate-msg" aria-live="polite"></div>
+  </form>
+</div>
 <header class="top"><div class="wrap">
   <a class="brand" href="#">two-letters<i></i></a>
   <nav><a href="#status">제작 현황</a><a href="#contents">주요 내용</a><a href="#preview">미리보기</a><a href="#cheatsheet" class="dl">필수 20</a></nav>
@@ -128,7 +167,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
     <p class="lead">ls, cp, mv처럼 암호 같은 두 글자 명령어를 사용 예시와 결과, 이름의 유래, 옵션 글자의 원래 영단어로 풀어 쓴 핸드북입니다. 2부에서는 한 사람의 하루와 여덟 가지 실제 문제를 따라가며 명령어를 문장처럼 이어 쓰는 법을 보여줍니다.</p>
     <div class="btns">
       <a class="btn primary" href="%EB%91%90_%EA%B8%80%EC%9E%90%EB%A1%9C_%EB%A7%90%ED%95%98%EB%8A%94_%EC%82%AC%EB%9E%8C%EB%93%A4.pdf">전자책 PDF 받기 <small>208쪽 · 6.1MB</small></a>
-      <a class="btn ghost" href="%EB%A7%A5_%ED%84%B0%EB%AF%B8%EB%84%90_%ED%95%84%EC%88%98%EB%AA%85%EB%A0%B9%EC%96%B4_20.pdf">필수 명령어 20 인포그래픽 <small>4쪽 · 1MB</small></a>
+      <a class="btn ghost" href="%EB%A7%A5_%ED%84%B0%EB%AF%B8%EB%84%90_%ED%95%84%EC%88%98%EB%AA%85%EB%A0%B9%EC%96%B4_20.pdf">필수 명령어 20 PDF <small>4쪽 · 1MB</small></a>
     </div>
   </div>
   <figure class="cover"><img src="assets/previews/book-cover.png" alt="두 글자로 말하는 사람들 표지"></figure>
@@ -158,7 +197,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
       <li>옵션 표 46개에 원래 영단어 표기<small>예: -r → recursive, -x → extract</small></li>
       <li>쪽수가 맞는 목차 · 목적별 찾아보기 52항목 · PDF 책갈피</li>
       <li>인쇄 사전 점검 통과<small>판형 일치, 폰트 전부 내장(OFL), 시스템 폰트 0, 짝수 쪽수, 고아 제목 0</small></li>
-      <li>필수 명령어 20 인포그래픽(A4 4쪽)</li>
+      <li>필수 명령어 20 요약본(A4 4쪽)</li>
     </ul></div>
     <div class="panel todo"><h3><span class="pill todo">남은 일</span>출간 전 할 일</h3><ul>
       <li>판권면 · 저자 정보<small>발행인, 발행처, 신고번호, 발행일, 정가 확정 필요</small></li>
@@ -205,13 +244,13 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
 
 <section id="cheatsheet"><div class="wrap">
   <div class="cheat">
-    <img src="assets/previews/cheatsheet-p1.png" alt="맥 터미널 필수 명령어 20 인포그래픽 1쪽">
+    <img src="assets/previews/cheatsheet-p1.png" alt="맥 터미널 필수 명령어 20 첫 쪽">
     <div>
       <span class="eyebrow">Cheat Sheet · 별도 배포용</span>
       <h3>맥 터미널 필수 명령어 20</h3>
-      <p>가장 많이 쓰는 20개를 사용 예시, 유래, 약어로 A4 네 쪽에 정리한 인포그래픽입니다. 휴대폰으로 보기 좋고 인쇄해도 깔끔합니다.</p>
+      <p>가장 많이 쓰는 20개를 사용 예시, 유래, 약어로 A4 네 쪽에 정리했습니다. 휴대폰으로 보기 좋고 인쇄해도 깔끔합니다.</p>
       <div class="twenty"><code>pwd</code><code>cd</code><code>ls</code><code>cat</code><code>man</code><code>mkdir</code><code>touch</code><code>cp</code><code>mv</code><code>rm</code><code>grep</code><code>find</code><code>echo</code><code>chmod</code><code>sudo</code><code>ps</code><code>kill</code><code>curl</code><code>ssh</code><code>tar</code></div>
-      <a class="btn primary" href="%EB%A7%A5_%ED%84%B0%EB%AF%B8%EB%84%90_%ED%95%84%EC%88%98%EB%AA%85%EB%A0%B9%EC%96%B4_20.pdf">인포그래픽 PDF 받기 <small>4쪽 · 1MB</small></a>
+      <a class="btn primary" href="%EB%A7%A5_%ED%84%B0%EB%AF%B8%EB%84%90_%ED%95%84%EC%88%98%EB%AA%85%EB%A0%B9%EC%96%B4_20.pdf">필수 명령어 20 PDF 받기 <small>4쪽 · 1MB</small></a>
     </div>
   </div>
 </div></section>
@@ -221,5 +260,28 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
   <span>두 글자로 말하는 사람들 — 맥 터미널, 50개의 단어로 컴퓨터와 대화하는 법</span>
   <span>마지막 업데이트 2026-10-03 · <a href="https://github.com/heekeunlee/mac_terminal_command">GitHub 저장소</a></span>
 </div></footer>
+<script>
+(function(){
+  var HASH="888b19a43b151683c87895f6211d9f8640f97bdc8ef32f03dbe057c8f5e56d32";
+  var form=document.getElementById("gate-form"), pin=document.getElementById("pin"), msg=document.getElementById("gate-msg");
+  function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return("0"+b.toString(16)).slice(-2);}).join("");}
+  function check(){
+    var v=pin.value.replace(/\D/g,"");
+    if(v.length!==4){msg.textContent="숫자 네 자리를 입력해 주세요.";return;}
+    crypto.subtle.digest("SHA-256",new TextEncoder().encode(v)).then(function(d){
+      if(hex(d)===HASH){
+        try{sessionStorage.setItem("tl-unlocked","1");}catch(e){}
+        document.documentElement.classList.remove("locked");
+        window.scrollTo(0,0);
+      }else{
+        msg.textContent="비밀번호가 맞지 않습니다. 다시 입력해 주세요.";
+        pin.value=""; form.classList.remove("shake"); void form.offsetWidth; form.classList.add("shake"); pin.focus();
+      }
+    });
+  }
+  form.addEventListener("submit",function(e){e.preventDefault();check();});
+  pin.addEventListener("input",function(){pin.value=pin.value.replace(/\D/g,"").slice(0,4); msg.textContent=""; if(pin.value.length===4) check();});
+})();
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 - 소개 페이지 (제작 현황 · 주요 내용): https://heekeunlee.github.io/mac_terminal_command/
 - 전자책 PDF (208쪽): [두_글자로_말하는_사람들.pdf](두_글자로_말하는_사람들.pdf)
-- 필수 명령어 20 인포그래픽 (A4 4쪽): [맥_터미널_필수명령어_20.pdf](맥_터미널_필수명령어_20.pdf)
+- 필수 명령어 20 (A4 4쪽): [맥_터미널_필수명령어_20.pdf](맥_터미널_필수명령어_20.pdf)
 
 ## 구성
 
@@ -15,14 +15,14 @@
 
 ## 제작 현황
 
-- 완료: 원고, 조판, 전자책 PDF, 인쇄용 사전 점검, 필수 20 인포그래픽
+- 완료: 원고, 조판, 전자책 PDF, 인쇄용 사전 점검, 필수 명령어 20 요약본
 - 남은 일: 판권면·저자 정보, ISBN, 교보문고 POD 사양 확인, 펼침 표지
 
 ## 다시 만들기
 
 ```zsh
 ./build_book.sh          # 책 PDF
-./build_infographic.sh   # 인포그래픽 PDF
+./build_infographic.sh   # 필수 명령어 20 PDF
 ```
 
 필요한 것: Google Chrome, Python 패키지 `playwright` `pypdf` `pdfplumber` `reportlab` `pypdfium2`, 인터넷 연결(Google Fonts).
@@ -30,6 +30,6 @@
 | 폴더 | 내용 |
 |---|---|
 | `src/book/` | 책 원고(`book.html`), 빌드(`build.py`), 내용 데이터, 폰트 |
-| `src/infographic/` | 인포그래픽 생성(`make.py`) |
+| `src/infographic/` | 필수 명령어 20 생성(`make.py`) |
 | `src/web-artifact/` | 초기 웹 버전 원본 |
 | `assets/previews/` | 소개 페이지용 미리보기 이미지 |
